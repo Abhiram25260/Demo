@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>test.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/log</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BeanServlet</servlet-name>
+		<servlet-class>test.BeanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BeanServlet</servlet-name>
+		<url-pattern>/view</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DisServlet</servlet-name>
+		<servlet-class>test.DisServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DisServlet</servlet-name>
+		<url-pattern>/tview</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AddTrain</servlet-name>
+		<servlet-class>test.AddTrain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddTrain</servlet-name>
+		<url-pattern>/AddTrain</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	<servlet-name>AddTrainADO</servlet-name>
+		<servlet-class>test.AddTrainADO</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddTrainADO</servlet-name>
+		<url-pattern>/AddTrainADO</url-pattern>
+	</servlet-mapping>
+	<servlet>
+	<servlet-name>RegServlet</servlet-name>
+		<servlet-class>test.RegServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegServlet</servlet-name>
+		<url-pattern>/UserReg</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+	<servlet-name>SearchTrain</servlet-name>
+		<servlet-class>test.SearchTrain</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchTrain</servlet-name>
+		<url-pattern>/SearchTrain</url-pattern>
+	</servlet-mapping>
+	
+	
+	<welcome-file-list>
+		<welcome-file>Log.html</welcome-file>
+	</welcome-file-list>
+</web-app>

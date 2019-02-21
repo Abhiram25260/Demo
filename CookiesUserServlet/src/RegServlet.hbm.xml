@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-mapping>
+	<class name="test.RegServlet" table="UserDetails">
+		<id name="UName" column="UName"/>
+		<property name="PWord" column="Password"/>
+		<property name="FName" column="FName"/>
+		<property name="LName" column="LName"/>
+		<property name="Addr" column="Addr"/>
+		<property name="Phno" column="Phno"/>
+		<property name="MID" column="MID"/>
+	</class>
+</hibernate-mapping>

@@ -1,14 +1,18 @@
 package test;
+import org.hibernate.*;
+import java.util.*;
 import java.io.*;
-import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet{
-	public Connection con;
+	public SessionFactory sf;
+	public ServletContext sct;
 	public void init()throws ServletException {
-		con=DBConnection.getcon();
+		sf=HBConnection.getsf();
+		sct=this.getServletContext();
 	}
+	@SuppressWarnings({ "deprecation", "rawtypes", "unchecked" })
 	public void doPost(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException {
 		PrintWriter pw=res.getWriter();
 		res.setContentType("text/html");
@@ -16,36 +20,39 @@ public class LoginServlet extends HttpServlet{
 		String UName=req.getParameter("UName");
 		String PWord=req.getParameter("PWord");
 		
-		try {
-			PreparedStatement ps=con.prepareStatement("select * from UserDetails where UName=? and Password=?");
-			ps.setString(1, UName);
-			ps.setString(2, PWord);
-			
-			ResultSet rs=ps.executeQuery();
-			
-			if(rs.next()) {
-				RegServlet rb=new RegServlet();
-				rb.setUName(rs.getString(1));
-				rb.setPWord(rs.getString(2));
-				rb.setFName(rs.getString(3));
-				rb.setLName(rs.getString(4));
-				rb.setAddr(rs.getString(5));
-				rb.setPhno(rs.getLong(6));
-				rb.setMID(rs.getString(7));
-				ServletContext sct=this.getServletContext();
-				sct.setAttribute("beanRef", rb);
-				Cookie ck=new Cookie("Fname",rs.getString(3));
-				res.addCookie(ck);
-				
-				pw.println("WELCOME :"+rs.getString(3)+"<br>");
-				RequestDispatcher rd=req.getRequestDispatcher("Link.html");
-				rd.include(req, res);
-			}
-			else {
+		Session ses=sf.openSession();
+		Query q=ses.createQuery("from RegServlet rb where rb.UName=:un and rb.PWord=:pw");
+		q.setParameter("un", UName);
+		q.setParameter("pw", PWord);
+		List l=q.list();
+			if(l.size()==0) {
 				pw.println("INVALID USER_NAME OR PASSWORD please TryAgain");
 				RequestDispatcher rd=req.getRequestDispatcher("Login.html");
 				rd.include(req, res);
 			}
-		}catch(Exception e) {}
+			else {
+				l.forEach((k)->
+				{
+					RegServlet rb=(RegServlet)k;
+					rb.getFName();
+					rb.getLName();
+					rb.getAddr();
+					rb.getPhno();
+					rb.getMID();
+					rb.getUName();
+					rb.getPWord();
+					sct.setAttribute("beanRef", rb);
+					Cookie ck=new Cookie("FName", rb.getFName());
+					res.addCookie(ck);
+					RequestDispatcher rd=req.getRequestDispatcher("Link.html");
+					try {
+						rd.include(req, res);
+					} catch (ServletException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
+			}
+		ses.close();
 	}
 }

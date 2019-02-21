@@ -24,7 +24,7 @@ public class ViewProfileServlet extends HttpServlet{
 			pw.println("Welcome :"+ck[0].getValue()+"<br>");
 			RequestDispatcher rd=req.getRequestDispatcher("Link.html");
 			rd.include(req, res);
-			pw.println("PROFILE DETAILS");
+			pw.println("<br>PROFILE DETAILS");
 			pw.println("<br>FIRST NAME: "+rb.getFName()+"<br>LAST NAME: "+rb.getLName()+"<br>ADDRESS: "+rb.getAddr()
 														+"<br>PHONE No: "+rb.getPhno()+"<br>MAIL ID: "+rb.getMID());
 		}
